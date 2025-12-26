@@ -1,0 +1,17 @@
+from typing import Optional
+import pandas as pd
+
+
+# Создайте декоратор для функций-отчетов,
+# который записывает в файл результат, который возвращает функция, формирующая отчет.
+def save_report_to_file():
+    """Декоратор без параметра — записывает данные отчета в файл с названием по умолчанию
+    (формат имени файла придумайте самостоятельно).
+    Декоратор с параметром — принимает имя файла в качестве параметра."""
+    pass
+
+
+def spending_by_category(transactions: pd.DataFrame,
+                         category: str,
+                         date: Optional[str] = None) -> pd.DataFrame:
+    pass
