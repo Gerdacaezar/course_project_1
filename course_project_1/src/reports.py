@@ -1,4 +1,5 @@
 from typing import Optional
+
 import pandas as pd
 
 
@@ -11,7 +12,12 @@ def save_report_to_file():
     pass
 
 
-def spending_by_category(transactions: pd.DataFrame,
-                         category: str,
-                         date: Optional[str] = None) -> pd.DataFrame:
+def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
+    """Функция принимает на вход:
+        датафрейм с транзакциями,
+        название категории,
+        опциональную дату.
+    Если дата не передана, то берется текущая дата.
+
+Функция возвращает траты по заданной категории за последние три месяца (от переданной даты)."""
     pass
