@@ -19,6 +19,15 @@ def xlsx_to_list_of_dict(path: str) -> list[dict[str, object]] | Any:
         return df.to_dict(orient="records")
 
 
+def xlsx_to_dataframe(path: str) -> pd.DataFrame:
+    """Функция открывает указанный Excel-файл и считывает его содержимое
+    в структуру pandas DataFrame. Поддерживает стандартные форматы Excel
+    и автоматически обрабатывает базовые типы данных."""
+    with open(path, "r", encoding="utf-8"):
+        df = pd.read_excel(path)
+        return df
+
+
 # Реализуйте набор функций и главную функцию, принимающую на вход строку с датой и временем в формате
 # YYYY-MM-DD HH:MM:SS и возвращающую JSON-ответ со следующими данными
 def greetings() -> str:
@@ -36,6 +45,8 @@ def greetings() -> str:
 
 
 def operations_in_period(operations: list[dict], date: str) -> list[dict]:
+    """Фильтрует операции, совершённые в том же месяце и году, что и указанная дата,
+    при условии, что день операции не превышает день указанной даты."""
     input_date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
     result = []
     for operation in operations:
@@ -48,6 +59,13 @@ def operations_in_period(operations: list[dict], date: str) -> list[dict]:
 
 
 def cards(data: list[dict]) -> list[dict]:
+    """Анализирует транзакции по банковским картам и формирует отчёт с суммарными тратами и кэшбэком по каждой карте.
+
+    Для каждой карты (идентифицируемой по номеру) вычисляются:
+    - общая сумма трат (по отрицательным значениям «Сумма операции»);
+    - накопленный кэшбэк (по положительным значениям «Кэшбэк»).
+
+    Результат возвращается в виде списка словарей с укороченным номером карты (последние 4 цифры)."""
     # Словарь для накопления сумм по каждой карте
     card_totals: DefaultDict[str, dict[str, float]] = collections.defaultdict(
         lambda: {"total_spent": 0.0, "cashback": 0.0}
