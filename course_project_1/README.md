@@ -181,7 +181,7 @@ project/
 
 ## Примеры использования
 
-1. **Анализ кэшбека за январь 2025**:
+**Анализ кэшбека за январь 2025**:
 ```python
 from src.services import cashback_categories
 from src.utils import xlsx_to_list_of_dict
@@ -189,7 +189,7 @@ from src.utils import xlsx_to_list_of_dict
 
 cashback_categories(xlsx_to_list_of_dict("data/operations.xlsx"), 2025, 1)
 ```
-2. **Отчёт по тратам в «Супермаркеты» на 15.01.2025**:
+**Отчёт по тратам в «Супермаркеты» на 15.01.2025**:
 ```python
 from src.reports import spending_by_category
 from src.utils import xlsx_to_dataframe
@@ -213,3 +213,4 @@ spending_by_category(xlsx_to_dataframe("data/operations.xlsx"), "Суперма�
 
 ## Контакты
 
+Пожалуйста, не звоните мне
