@@ -6,7 +6,6 @@ import pytest
 
 from src.utils import (cards, exchange_rate, greetings, operations_in_period, stock_price, top_5_transactions,
                        xlsx_to_dataframe, xlsx_to_list_of_dict)
-from tests.conftest import list_operations
 
 
 @patch("builtins.open", new_callable=mock_open)
