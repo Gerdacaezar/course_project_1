@@ -19,3 +19,6 @@ def home_page(date_time: str) -> str:
 
     json_data = json.dumps(result, indent=4, ensure_ascii=False)
     return json_data
+
+
+# print(home_page('2019-03-03 12:12:12'))

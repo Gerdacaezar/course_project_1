@@ -2,7 +2,7 @@ import collections
 import json
 import os
 from datetime import datetime
-from typing import Any, DefaultDict
+from typing import Any, DefaultDict, Optional
 
 import pandas as pd  # type: ignore
 import requests  # type: ignore
@@ -30,15 +30,15 @@ def xlsx_to_dataframe(path: str) -> pd.DataFrame:
 
 # Реализуйте набор функций и главную функцию, принимающую на вход строку с датой и временем в формате
 # YYYY-MM-DD HH:MM:SS и возвращающую JSON-ответ со следующими данными
-def greetings() -> str:
-    """Приветствие в формате "???",
-    где ??? — «Доброе утро» / «Добрый день» / «Добрый вечер» / «Доброй ночи» в зависимости от текущего времени."""
-    now = (datetime.now()).hour
-    if 4 <= now <= 9:
+def greetings(now: Optional[Any] = None) -> str:
+    if now is None:
+        now = datetime.now()
+    hour = now.hour
+    if 4 <= hour <= 9:
         return "Доброе утро"
-    elif 10 <= now <= 16:
+    elif 10 <= hour <= 16:
         return "Добрый день"
-    elif 17 <= now <= 22:
+    elif 17 <= hour <= 22:
         return "Добрый вечер"
     else:
         return "Доброй ночи"
@@ -133,13 +133,18 @@ def exchange_rate(path: str) -> list[dict]:
         status_code = response.status_code
         response_text = response.text
         if status_code == 200:
-            response_dict = json.loads(response_text)
-            result.append(
-                {
-                    "currency": exchange,
-                    "rate": round(response_dict["result"], 2),
-                }
-            )
+            try:
+                response_dict = json.loads(response_text)
+                if "result" in response_dict:  # проверяем наличие ключа
+                    result.append(
+                        {
+                            "currency": exchange,
+                            "rate": round(response_dict["result"], 2),
+                        }
+                    )
+            except json.JSONDecodeError:
+                # Если JSON невалиден — пропускаем
+                continue
 
     return result
 
